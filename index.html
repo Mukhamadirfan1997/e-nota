@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SPBU System Professional</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fa-solid fa-gas-pump"></i> SPBU Operator</h2>
+          <button class="btn-help" onclick="toggleHelpModal()" title="Petunjuk Penggunaan">
+            <i class="fa-solid fa-circle-question"></i>
+          </button>
+        </div>
+
+        <div class="clock" id="clock">Memuat waktu...</div>
+
+        <div class="form">
+          <div class="full">
+            <label>Jenis BBM</label>
+            <select id="bbm"></select>
+          </div>
+
+          <div>
+            <label>Nominal (Rp)</label>
+            <input
+              id="nominal"
+              type="number"
+              oninput="hitung()"
+              placeholder="Contoh: 50000"
+            />
+          </div>
+
+          <div>
+            <label>Harga / Liter</label>
+            <input id="harga" type="number" oninput="hitung()" />
+          </div>
+
+          <div>
+            <label>Liter (Auto)</label>
+            <input id="liter" readonly />
+          </div>
+
+          <div>
+            <label>No Pompa</label>
+            <input id="pompa" placeholder="01" />
+          </div>
+
+          <div>
+            <label>No Selang</label>
+            <input id="selang" placeholder="02" />
+          </div>
+
+          <div>
+            <label>Plat Nomor</label>
+            <input id="plat" placeholder="B 1234 ABC" />
+          </div>
+
+          <div class="full">
+            <label>Odometer</label>
+            <input id="odo" placeholder="12345" />
+          </div>
+
+          <div class="full">
+            <label>Tanggal & Jam (Kosongkan jika Realtime)</label>
+            <input id="tanggal" type="datetime-local" step="1" />
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn-preview" onclick="generateNota()">
+            <i class="fa-solid fa-eye"></i> Preview
+          </button>
+          <button class="btn-print" onclick="printStruk()">
+            <i class="fa-solid fa-laptop"></i> Print Laptop
+          </button>
+          <button class="btn-mobile" onclick="printRawBT()">
+            <i class="fa-solid fa-mobile-screen-button"></i> Cetak Mobile
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><i class="fa-solid fa-receipt"></i> Preview Nota</h2>
+        <pre id="nota">Belum ada data preview...</pre>
+      </div>
+    </div>
+
+    <footer>Developed by apan • SPBU System v1.1</footer>
+
+    <!-- MODAL PETUNJUK PENGGUNAAN -->
+    <div id="helpModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-circle-info"></i> Petunjuk Penggunaan</h3>
+          <span class="close-modal" onclick="toggleHelpModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <section>
+            <h4><i class="fa-solid fa-pen-to-square"></i> 1. Cara Mengisi Form</h4>
+            <ul>
+              <li><strong>Pilih BBM</strong>: Otomatis mengupdate harga per liter.</li>
+              <li><strong>Nominal</strong>: Isi jumlah uang, Liter akan terhitung otomatis.</li>
+              <li><strong>Data Kendaraan</strong>: Isi Pompa, Selang, Plat Nomor, dan Odometer.</li>
+              <li><strong>Waktu</strong>: Biarkan kosong jika ingin menggunakan waktu realtime sekarang.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h4><i class="fa-solid fa-laptop"></i> 2. Panduan Cetak Laptop</h4>
+            <p>Download Driver: <a href="https://www.cnfujun.com/d/38" target="_blank">Download Driver VSC</a></p>
+            <ul>
+              <li>Gunakan tombol <strong>Print Laptop</strong>.</li>
+              <li>Atur Skala: 100, Margin: None di jendela print browser.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h4><i class="fa-solid fa-mobile-screen"></i> 3. Panduan Cetak Mobile</h4>
+            <p>Gunakan aplikasi <strong>RawBT</strong> di Android.</p>
+            <ul>
+              <li>Koneksikan printer Bluetooth di aplikasi RawBT.</li>
+              <li>Klik tombol <strong>Cetak Mobile</strong> di website ini.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h4><i class="fa-solid fa-download"></i> 4. Instal Sebagai Aplikasi (PWA)</h4>
+            <p>Agar lebih praktis dan stabil, Anda bisa menginstal website ini menjadi aplikasi di HP/Laptop:</p>
+            <ul>
+              <li><strong>Android (Chrome)</strong>: Klik titik tiga di pojok kanan atas > pilih <strong>"Instal aplikasi"</strong> atau <strong>"Tambahkan ke Layar Utama"</strong>.</li>
+              <li><strong>Laptop (Chrome/Edge)</strong>: Klik ikon <strong>"Instal"</strong> yang muncul di ujung kanan bar alamat browser.</li>
+              <li><strong>iPhone (Safari)</strong>: Klik ikon <strong>Share</strong> > pilih <strong>"Add to Home Screen"</strong>.</li>
+            </ul>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-preview" onclick="toggleHelpModal()">Tutup</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
